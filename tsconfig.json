@@ -1,26 +1,47 @@
 {
   "compilerOptions": {
-    "target": "es5",
-    "lib": [
-      "dom",
-      "dom.iterable",
-      "esnext"
-    ],
-    "allowJs": true,
-    "skipLibCheck": true,
-    "esModuleInterop": true,
-    "allowSyntheticDefaultImports": true,
-    "strict": true,
-    "forceConsistentCasingInFileNames": true,
-    "noFallthroughCasesInSwitch": true,
-    "module": "esnext",
+    "baseUrl": ".",
+    // Target latest version of ECMAScript.
+    "target": "es2015",
+    "module": "commonjs",
+    // Search under node_modules for non-relative imports.
     "moduleResolution": "node",
     "resolveJsonModule": true,
-    "isolatedModules": true,
+    "lib": ["es2022", "dom"],
+    "typeRoots": ["./node_modules/@types"],
+    "jsx": "react-jsx",
+    // Process & infer types from .js files.
+    "allowJs": true,
+    // Don't emit; allow Babel to transform files.
     "noEmit": true,
-    "jsx": "react-jsx"
+    // Enable strictest settings like strictNullChecks & noImplicitAny.
+    "strict": true,
+    "strictNullChecks": true,
+    "noImplicitAny": true,
+    // Disallow features that require cross-file information for emit.
+    "isolatedModules": false,
+    // Import non-ES modules as default imports.
+    "esModuleInterop": true,
+    "sourceMap": true,
+    "removeComments": true,
+    "allowSyntheticDefaultImports": true,
+    "preserveConstEnums": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "preserveSymlinks": true,
+    // not possible until we switch fully to ESM
+    // "verbatimModuleSyntax": true,
+    "paths": {
+      // map project root
+    }
   },
+  "ts-node": {
+    "files": true
+  },
+  "exclude": ["node_modules"],
   "include": [
-    "src"
+    "./src/components",
+    "./src/lib", "src/App.tsx", "src/__tests__/App.test.tsx",
+
   ]
 }

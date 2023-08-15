@@ -1,46 +1,70 @@
-# Getting Started with Create React App
+# The ATM App
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+It’s payday and there’s a new Pokémon game in town so Michael wants to buy a Switch.
+It costs £270, and we’d like you to build an ATM web app he can use.
+He will need to enter his PIN (​1111​) which you should check against our PIN API. The API will tell you his current
+balance, which should then be shown on screen.
+He’s going to make 3 withdrawals:
 
-## Available Scripts
+- £140
+- £50
+- £90
 
-In the project directory, you can run:
+Unbeknownst to Michael, diggers keep stealing our ATMs so we aren’t carrying a lot of notes. The machine has:
 
-### `npm start`
+- 4 x £5 notes
+- 15 x £10 notes
+- 7 x £20 notes
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+You should try to give a roughly even mix of notes when possible, and will have to take into account what to do when certain ones run out.
+Your ATM allows an overdraft of up to £100 and should let users know if they do go overdrawn.
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+The PIN API
+This is a simple endpoint to let you check a user’s PIN. You make a POST call to: `https://frontend->challenge.screencloud-michael.now.sh/api/pin/`
 
-### `npm test`
+The request body should be of type `application/json` and look like:
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+```json
+{
+  "pin":"1111"
+}
+```
 
-### `npm run build`
+If all is good, the API will return with a 200 status, and a response like:
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+```json
+{
+  "currentBalance": 220
+}
+```
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+If you’ve coded your request wrong, you will get an error message to help you out, or a 403 error which says if the
+PIN itself is wrong.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+## Set up
 
-### `npm run eject`
+```bash
+cd atm-web-app
+npm install
+```
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+## Running the app
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+```bash
+npm start
+```
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+## Test suite
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+The tests are in `__tests__` folder for the `components`. It is using jest.
+Test can be run by:
 
-## Learn More
+```bash
+npx jest
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+or
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+npm test <test_file>
+```
+
+**Note**: I had a working test suite. For some reason I messed up with the jest config at last minute. Probably the test config won't be working as expected but I believe a clean `npm ci` should fix it.
